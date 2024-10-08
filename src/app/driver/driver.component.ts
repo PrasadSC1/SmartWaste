@@ -65,7 +65,7 @@ export class DriverComponent implements OnInit {
 
   assignRoute() {
     const url = `${this.app.baseUrl}assignRoute/${this.selectedDriver.id}`;
-    this.http.put(url, { routeId: this.selectedRoute.routeId }).subscribe((data: any) => {
+    this.http.put(url, this.selectedRoute.routeId).subscribe((data: any) => {
       console.log("Route assigned:", data);
       this.loadRoutes(); // Optionally reload routes after assignment
     });
