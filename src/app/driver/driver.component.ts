@@ -67,7 +67,13 @@ export class DriverComponent implements OnInit {
     const url = `${this.app.baseUrl}assignRoute/${this.selectedDriver.id}`;
     this.http.put(url, this.selectedRoute.routeId).subscribe((data: any) => {
       console.log("Route assigned:", data);
-      this.loadRoutes(); // Optionally reload routes after assignment
+
+      this.selectedDriver.assignedRoute = `${this.selectedRoute.startingPoint} to ${this.selectedRoute.endingPoint}`;
+      const driverIndex = this.driversList.findIndex((driver: { id: any; }) => driver.id === this.selectedDriver.id);
+      if (driverIndex !== -1) {
+        this.driversList[driverIndex] = { ...this.driversList[driverIndex], assignedRoute: this.selectedDriver.assignedRoute };
+      }
     });
   }
+
 }

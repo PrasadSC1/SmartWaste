@@ -71,7 +71,6 @@ export class WastepickerComponent implements OnInit {
       const url = `${this.app.baseUrl}assignArea/${this.selectedWastePicker.uid}`;
       this.http.put(url, this.selectedArea.area).subscribe((data: any) => {
         if (data == 1) {
-          console.log("Area assigned successfully.");
           this.selectedWastePicker.area = this.selectedArea.area; // Update UI with the new area
         }
       });

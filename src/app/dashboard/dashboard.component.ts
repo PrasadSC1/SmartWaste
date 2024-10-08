@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Chart } from 'angular-highcharts';
 import { AppComponent } from '../app.component';
+import * as Highcharts from 'highcharts';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,7 +13,7 @@ export class DashboardComponent {
   data1: any = [];
   combinedData: any = [];
   wasteDataById: any = {};
-  pieChart!: Chart;
+  pieChart: Chart =new Chart;
 
   colorMapping: any = {};
 
@@ -34,8 +35,6 @@ export class DashboardComponent {
     const result: any = {};
     data.forEach(item => {
       const id = item.userName;
-      console.log(id);
-
       if (!result[id]) {
         result[id] = { dryTotal: 0, wetTotal: 0 };
         this.colorMapping[id] = this.getRandomColor();
@@ -75,23 +74,23 @@ export class DashboardComponent {
       },
       plotOptions: {
         pie: {
-          innerSize: '99%', // Adjust inner size if necessary
+          innerSize: '99%',
           borderWidth: 10,
           borderColor: '',
           slicedOffset: 10,
           dataLabels: {
-            connectorWidth: 2.5,
+            connectorWidth: 4,
           },
         },
       },
       title: {
         text: 'Waste Collected by Driver',
-        align: 'center', // Center alignment
-        verticalAlign: 'middle', // Vertical center
-        floating: true, // Allow floating
+        align: 'center',
+        verticalAlign: 'middle',
+        floating: true,
         style: {
-          fontSize: '18px', // Adjust font size as needed
-          color: '#000', // Title color
+          fontSize: '18px',
+          color: '#000',
         },
       },
       legend: {
