@@ -1,0 +1,29 @@
+<h2 class="my-4 text-center">List of Users</h2>
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead class="table-light">
+      <tr>
+        <th>RFID</th>
+        <th>Area</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Contact</th>
+        <th>Address 1</th>
+        <th>Address 2</th>
+        <th>Pin Code</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let driver of userlist" style="cursor: pointer;">
+        <td>{{ driver.rf_id }}</td>
+        <td>{{ driver.area }}</td>
+        <td>{{ driver.username }}</td>
+        <td>{{ driver.email }}</td>
+        <td>{{ driver.contact }}</td>
+        <td>{{ driver.address1 }}</td>
+        <td>{{ driver.address2 }}</td>
+        <td>{{ driver.pincode }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
