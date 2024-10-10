@@ -26,7 +26,7 @@ export class UserComponent implements OnInit {
   userlist: Driver[] = [];
   selectedUser: Driver | null = null;
 
-  @ViewChild('userModal') userModal: any;  // Reference to the modal
+  @ViewChild('userModal') userModal: any;
 
   constructor(
     private http: HttpClient,
@@ -40,7 +40,7 @@ export class UserComponent implements OnInit {
   loadDrivers(): void {
     const url = `${this.app.baseUrl}getAllUsers`;
     this.http.get<Driver[]>(url).subscribe((data: Driver[]) => {
-      this.userlist = data; 
+      this.userlist = data;
     });
   }
 }

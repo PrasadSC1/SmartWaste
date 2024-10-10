@@ -12,8 +12,8 @@ declare var bootstrap: any; // Declare bootstrap for global usage
   styleUrls: ['./driver.component.css']
 })
 export class DriverComponent implements OnInit {
-  driversList: any = []; // Initialize as an empty array
-  routesList: any = [];   // Initialize as an empty array
+  driversList: any = [];
+  routesList: any = [];
   selectedDriver: any = null;
   selectedRoute: any = null;
 
@@ -21,7 +21,7 @@ export class DriverComponent implements OnInit {
     private http: HttpClient,
     private app: AppComponent,
     private driverService: DriverService,
-    @Inject(PLATFORM_ID) private platformId: Object // Inject PLATFORM_ID
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.loadRoutes();
   }
@@ -43,8 +43,8 @@ export class DriverComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       const modalElement = document.getElementById('driverModal');
       if (modalElement) {
-        const modal = new bootstrap.Modal(modalElement); // Use bootstrap variable directly
-        modal.show(); // Show the modal
+        const modal = new bootstrap.Modal(modalElement);
+        modal.show();
       }
     }
   }

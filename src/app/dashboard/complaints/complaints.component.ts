@@ -45,7 +45,7 @@ export class ComplaintsComponent implements OnInit {
   formatTime(timeString: string): string {
     const [datePart, timePart] = timeString.split(' ');
     const [day, month, year] = datePart.split('/');
-    const formattedDate = `${year}-${month}-${day}T${timePart}+05:30`; // Adding IST offset
+    const formattedDate = `${year}-${month}-${day}T${timePart}+05:30`;
     return new Date(formattedDate).toLocaleString('en-IN', {
       weekday: 'short',
       year: 'numeric',

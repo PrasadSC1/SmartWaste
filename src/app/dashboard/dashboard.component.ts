@@ -18,8 +18,7 @@ export class DashboardComponent {
     this.loadDriverAndUserData("weekly");
   }
   switchData(viewType: string) {
-    // this.currentView = viewType;  // Update the current view type
-    this.loadDriverAndUserData(viewType);  // Reload data based on the new view type
+     this.loadDriverAndUserData(viewType); 
   }
   loadDriverAndUserData(viewType: string) {
     const driverUrl = `${this.app.baseUrl}getDriverDailyData/${viewType}`;

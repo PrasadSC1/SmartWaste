@@ -1,7 +1,8 @@
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
   <div class="container-fluid flex-wrap">
     <a class="navbar-brand">Dashboard</a>
-    <button class="navbar-toggler" type="button" (click)="toggleMenu()" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" (click)="toggleMenu()" aria-expanded="false"
+      aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse flex-wrap" [ngClass]="{'show': isMenuOpen}">
@@ -32,7 +33,6 @@
           </ul>
         </div>
       </div>
-      <!-- Cancel Button -->
       <div *ngIf="isMenuOpen" class="navbar-nav d-flex align-items-center ms-auto">
         <button class="nav-link btn" (click)="toggleMenu()">Cancel</button>
       </div>

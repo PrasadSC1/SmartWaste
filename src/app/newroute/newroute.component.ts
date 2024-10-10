@@ -79,7 +79,7 @@ export class NewrouteComponent implements OnInit {
         this.stops.clear();
         this.editingRouteId = null;
         this.selectedRouteId = null;
-        this.editmode = false; // Reset edit mode after submission
+        this.editmode = false;
         this.allRoutes();
       },
       (error) => {
@@ -171,11 +171,11 @@ export class NewrouteComponent implements OnInit {
     }
   }
   cancelEdit() {
-    this.editmode = false;  // Exit edit mode
-    this.routeForm.reset();  // Reset the form fields
-    this.stops.clear();      // Clear the stops FormArray
-    this.editingRouteId = null; // Clear the editing route ID
-    this.selectedRouteId = null; // Clear the selected route ID
+    this.editmode = false;
+    this.routeForm.reset();
+    this.stops.clear();
+    this.editingRouteId = null;
+    this.selectedRouteId = null;
   }
 
 }
