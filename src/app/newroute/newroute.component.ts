@@ -85,7 +85,7 @@ export class NewrouteComponent implements OnInit {
       (error) => {
         this.isLoading = false;
         this.submissionMessage = 'Error setting/updating route. Please try again.';
-        console.error('Error:', error);
+
       }
     );
   }

@@ -39,9 +39,6 @@ export class WastepickerComponent implements OnInit {
   // Open the modal with selected waste picker details
   async openModal(wastePicker: any): Promise<void> {
     this.selectedWastePicker = wastePicker;
-    console.log(this.selectedWastePicker);
-
-    // Check if running in the browser environment
     if (isPlatformBrowser(this.platformId)) {
       const { Modal } = await import('bootstrap'); // Dynamic import of Bootstrap Modal
       const modalElement = document.getElementById('wastePickerModal');

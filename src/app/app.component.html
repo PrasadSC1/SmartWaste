@@ -1,16 +1,15 @@
- 
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
   <div class="container-fluid flex-wrap">
     <a class="navbar-brand">Dashboard</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" (click)="toggleMenu()" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse flex-wrap" id="navbarNavAltMarkup">
+    <div class="collapse navbar-collapse flex-wrap" [ngClass]="{'show': isMenuOpen}">
       <div class="navbar-nav d-flex align-items-center">
         <button class="nav-link btn" aria-current="page" (click)="toggle(0)">Home</button>
-   <div class="nav-item dropdown">
-          <button class="nav-link btn dropdown-toggle" type="button" id="driverDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        <div class="nav-item dropdown">
+          <button class="nav-link btn dropdown-toggle" type="button" id="driverDropdown" data-bs-toggle="dropdown"
+            aria-expanded="false">
             Driver
           </button>
           <ul class="dropdown-menu" aria-labelledby="driverDropdown">
@@ -21,10 +20,26 @@
 
         <button class="nav-link btn" (click)="toggle(2)">User</button>
         <button class="nav-link btn" (click)="toggle(3)">Waste Picker</button>
+
+        <div class="nav-item dropdown">
+          <button class="nav-link btn dropdown-toggle" type="button" id="complaintsDropdown" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Complaints
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="complaintsDropdown">
+            <li><a class="dropdown-item" (click)="toggle(5)">Driver</a></li>
+            <li><a class="dropdown-item" (click)="toggle(6)">WastePicker</a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- Cancel Button -->
+      <div *ngIf="isMenuOpen" class="navbar-nav d-flex align-items-center ms-auto">
+        <button class="nav-link btn" (click)="toggleMenu()">Cancel</button>
       </div>
     </div>
   </div>
 </nav>
+
 
 <div>
   <div *ngIf="whatToShow == 0">
@@ -41,5 +56,11 @@
   </div>
   <div *ngIf="whatToShow == 4">
     <app-newroute></app-newroute>
+  </div>
+  <div *ngIf="whatToShow == 5">
+    <app-complaints [toggle1]="toggle1"></app-complaints>
+  </div>
+  <div *ngIf="whatToShow == 6">
+    <app-complaints [toggle1]="toggle1"></app-complaints>
   </div>
 </div>

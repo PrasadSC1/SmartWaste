@@ -34,9 +34,7 @@ export class DriverComponent implements OnInit {
     const url = `${this.app.baseUrl}getAllDrivers`;
     this.driverService.getDrivers(url).subscribe((data: any) => {
       this.driversList = data;
-      console.log(this.driversList);
       this.driverService.setDrivers(data);
-      console.log('Drivers loaded:', this.driversList);
     });
   }
 
@@ -55,7 +53,7 @@ export class DriverComponent implements OnInit {
     const url = `${this.app.baseUrl}getAllRoutes`;
     this.http.get(url).subscribe((data: any) => {
       this.routesList = data;
-      console.log("Routes loaded:", this.routesList);
+
     });
   }
 
@@ -66,8 +64,6 @@ export class DriverComponent implements OnInit {
   assignRoute() {
     const url = `${this.app.baseUrl}assignRoute/${this.selectedDriver.id}`;
     this.http.put(url, this.selectedRoute.routeId).subscribe((data: any) => {
-      console.log("Route assigned:", data);
-
       this.selectedDriver.assignedRoute = `${this.selectedRoute.startingPoint} to ${this.selectedRoute.endingPoint}`;
       const driverIndex = this.driversList.findIndex((driver: { id: any; }) => driver.id === this.selectedDriver.id);
       if (driverIndex !== -1) {

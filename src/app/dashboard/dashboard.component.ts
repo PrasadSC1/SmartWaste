@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Chart } from 'angular-highcharts';
 import { AppComponent } from '../app.component';
-import * as Highcharts from 'highcharts';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,27 +9,47 @@ import * as Highcharts from 'highcharts';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
-  data1: any = [];
-  combinedData: any = [];
-  wasteDataById: any = {};
-  pieChart: Chart =new Chart;
-
+  driverPieChart: Chart = new Chart({});
+  userPieChart: Chart = new Chart({});
+  wastePickerChart: Chart = new Chart({});
   colorMapping: any = {};
 
   constructor(private http: HttpClient, private app: AppComponent) {
-    this.loadDataFromServer();
+    this.loadDriverAndUserData("weekly");
   }
+  switchData(viewType: string) {
+    // this.currentView = viewType;  // Update the current view type
+    this.loadDriverAndUserData(viewType);  // Reload data based on the new view type
+  }
+  loadDriverAndUserData(viewType: string) {
+    const driverUrl = `${this.app.baseUrl}getDriverDailyData/${viewType}`;
+    const userUrl = `${this.app.baseUrl}getUsersDailyData/${viewType}`;
+    const wastePickerUrl = `${this.app.baseUrl}getWastePickersDailyData/${viewType}`;
 
-  loadDataFromServer() {
-    const url = `${this.app.baseUrl}getDailyData/DRIVERS`;
-    this.http.get(url).subscribe((data: any) => {
-      this.data1 = data;
-      this.combinedData = this.data1;
-      this.wasteDataById = this.groupDataById(this.combinedData);
-      this.createPieChart();
+    this.http.get(driverUrl).subscribe({
+      next: (driverData: any) => {
+        const driverWasteData = this.groupDataById(driverData);
+        this.driverPieChart = this.createPieChart(driverWasteData, `Drivers`);
+      },
+      error: (err) => console.error('Error fetching driver data', err)
+    });
+
+    this.http.get(userUrl).subscribe({
+      next: (userData: any) => {
+        const userWasteData = this.groupDataById(userData);
+        this.userPieChart = this.createPieChart(userWasteData, `Users`);
+      },
+      error: (err) => console.error('Error fetching user data', err)
+    });
+
+    this.http.get(wastePickerUrl).subscribe({
+      next: (wastePickerData: any) => {
+        const wastePickerChart = this.groupDataById(wastePickerData);
+        this.wastePickerChart = this.createPieChart(wastePickerChart, `WastePickers`);
+      },
+      error: (err) => console.error('Error fetching waste picker data', err)
     });
   }
-
   groupDataById(data: any[]) {
     const result: any = {};
     data.forEach(item => {
@@ -44,64 +63,67 @@ export class DashboardComponent {
     });
     return result;
   }
-  createPieChart() {
-    const chartData = Object.keys(this.wasteDataById).map(id => {
-      return {
-        name: `Name: ${id} - Dry`,
-        y: this.wasteDataById[id].dryTotal,
-        color: this.colorMapping[id],
-      };
-    }).concat(Object.keys(this.wasteDataById).map(id => {
-      return {
-        name: `Name: ${id} - Wet`,
-        y: this.wasteDataById[id].wetTotal,
-        color: this.colorMapping[id],
-      };
-    }));
 
-    this.pieChart = new Chart({
+  createPieChart(dataById: any, title: string): Chart {
+    const chartData = Object.keys(dataById).flatMap(id => [
+      { name: `${id} - Dry`, y: dataById[id].dryTotal, color: this.colorMapping[id] },
+      { name: `${id} - Wet`, y: dataById[id].wetTotal, color: this.colorMapping[id] }
+    ]);
+
+    return new Chart({
       chart: {
         type: 'pie',
         plotShadow: false,
-        events: {
-          load: function () {
-            this.reflow();
-          },
-        },
+        height: '15%',
       },
       credits: {
         enabled: false,
       },
       plotOptions: {
         pie: {
-          innerSize: '99%',
-          borderWidth: 10,
-          borderColor: '',
-          slicedOffset: 10,
+          innerSize: '90%',
+          borderWidth: 2,
           dataLabels: {
-            connectorWidth: 4,
+            format: '{point.name}',
+            distance: 1,
+            style: {
+              fontSize: '12px'
+            }
           },
         },
       },
       title: {
-        text: 'Waste Collected by Driver',
+        text: title,
         align: 'center',
         verticalAlign: 'middle',
         floating: true,
         style: {
-          fontSize: '18px',
+          fontSize: '16px',
           color: '#000',
         },
       },
       legend: {
         enabled: false,
       },
-      series: [
-        {
-          type: 'pie',
-          data: chartData,
-        },
-      ],
+      series: [{
+        type: 'pie',
+        data: chartData,
+      }],
+      responsive: {
+        rules: [{
+          condition: {
+            maxWidth: 600,
+          },
+          chartOptions: {
+            plotOptions: {
+              pie: {
+                innerSize: '90%',
+                borderWidth: 2,
+              }
+            }
+          }
+        }]
+      }
     });
   }
 

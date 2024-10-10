@@ -40,8 +40,7 @@ export class UserComponent implements OnInit {
   loadDrivers(): void {
     const url = `${this.app.baseUrl}getAllUsers`;
     this.http.get<Driver[]>(url).subscribe((data: Driver[]) => {
-      this.userlist = data;
-      console.log('Drivers loaded:', this.userlist);
+      this.userlist = data; 
     });
   }
 }

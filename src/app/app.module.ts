@@ -11,7 +11,6 @@ import { UserComponent } from './user/user.component';
 import { WastepickerComponent } from './wastepicker/wastepicker.component';
 import { NewrouteComponent } from './newroute/newroute.component';
 import { ComplaintsComponent } from './dashboard/complaints/complaints.component';
-import { CustomChartDirective } from './dashboard/custom-chart.directive';
 
 @NgModule({
   declarations: [
@@ -22,7 +21,6 @@ import { CustomChartDirective } from './dashboard/custom-chart.directive';
     WastepickerComponent,
     NewrouteComponent,
     ComplaintsComponent,
-    CustomChartDirective
   ],
   imports: [
     BrowserModule,
