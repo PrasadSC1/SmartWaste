@@ -30,7 +30,7 @@ export interface RouteResponse {
   templateUrl: './newroute.component.html',
   styleUrls: ['./newroute.component.css']
 })
-export class NewrouteComponent implements OnInit {
+export class NewrouteComponent {
   routeForm: FormGroup;
   isLoading = false;
   submissionMessage = '';
@@ -55,8 +55,6 @@ export class NewrouteComponent implements OnInit {
     this.allRoutes();
   }
 
-  ngOnInit(): void { }
-
   submitRoute() {
     if (this.routeForm.invalid) {
       this.submissionMessage = 'Please fill all required fields correctly.';
@@ -64,11 +62,16 @@ export class NewrouteComponent implements OnInit {
     }
 
     this.isLoading = true;
+    const fullRoute: Route = {
+      routeId: this.editingRouteId ? this.editingRouteId : '',
+      startingPoint: this.routeForm.get('startingPoint')?.value,
+      endingPoint: this.routeForm.get('endingPoint')?.value,
+      stops: this.routeForm.value.stops
+    };
     const url = this.editingRouteId
-      ? `${this.app.baseUrl}updateRoute/${this.editingRouteId}`
+      ? `${this.app.baseUrl}updateRoute`
       : `${this.app.baseUrl}setNewRoute`;
-
-    this.http.post<RouteResponse>(url, this.routeForm.value).subscribe(
+    this.http.post<RouteResponse>(url, fullRoute).subscribe(
       (data) => {
         this.isLoading = false;
         this.submissionMessage = this.editingRouteId
@@ -85,7 +88,6 @@ export class NewrouteComponent implements OnInit {
       (error) => {
         this.isLoading = false;
         this.submissionMessage = 'Error setting/updating route. Please try again.';
-
       }
     );
   }
