@@ -28,6 +28,7 @@
             Complaints
           </button>
           <ul class="dropdown-menu" aria-labelledby="complaintsDropdown">
+            <li><a class="dropdown-item" (click)="toggle(7)">User</a></li>
             <li><a class="dropdown-item" (click)="toggle(5)">Driver</a></li>
             <li><a class="dropdown-item" (click)="toggle(6)">WastePicker</a></li>
           </ul>
@@ -61,6 +62,9 @@
     <app-complaints [toggle1]="toggle1"></app-complaints>
   </div>
   <div *ngIf="whatToShow == 6">
+    <app-complaints [toggle1]="toggle1"></app-complaints>
+  </div>
+  <div *ngIf="whatToShow == 7">
     <app-complaints [toggle1]="toggle1"></app-complaints>
   </div>
 </div>

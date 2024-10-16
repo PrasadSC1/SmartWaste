@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppComponent } from '../app.component';
 
-interface Driver {
+interface User {
   rf_id: string;
   area: string;
   username: string;
@@ -12,10 +12,6 @@ interface Driver {
   address2: string;
   pincode: string;
 }
-// src/global.d.ts
-interface Window {
-  bootstrap: any;
-}
 
 @Component({
   selector: 'app-user',
@@ -23,8 +19,8 @@ interface Window {
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-  userlist: Driver[] = [];
-  selectedUser: Driver | null = null;
+  userlist: User[] = [];
+  selectedUser: User | null = null;
 
   @ViewChild('userModal') userModal: any;
 
@@ -34,12 +30,12 @@ export class UserComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loadDrivers();
+    this.loadUser();
   }
 
-  loadDrivers(): void {
+  loadUser(): void {
     const url = `${this.app.baseUrl}getAllUsers`;
-    this.http.get<Driver[]>(url).subscribe((data: Driver[]) => {
+    this.http.get<User[]>(url).subscribe((data: User[]) => {
       this.userlist = data;
     });
   }

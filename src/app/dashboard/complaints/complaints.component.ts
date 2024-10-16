@@ -8,34 +8,29 @@ import { AppComponent } from '../../app.component';
   styleUrls: ['./complaints.component.css']
 })
 export class ComplaintsComponent implements OnInit {
-  driverComplaints: any = [];
-  wastePickerComplaints: any = [];
-
+  complaints: any[] = []; // Combined complaints array
   @Input() toggle1: any;
 
-  constructor(private http: HttpClient, private app: AppComponent) {
-  }
+  constructor(private http: HttpClient, private app: AppComponent) {}
+
   ngOnInit(): void {
+    if (this.toggle1) {
+      this.loadComplaints();
+    }
+  }
+
+  loadComplaints() {
+    let url = '';
     if (this.toggle1 == 5) {
-      this.loadComplaint();
+      url = `${this.app.baseUrl}getDriverComplaints`;
+    } else if (this.toggle1 == 6) {
+      url = `${this.app.baseUrl}getWastePickerComplaints`;
+    } else if (this.toggle1 == 7) {
+      url = `${this.app.baseUrl}getUserComplaints`;
     }
-    else if (this.toggle1 == 6) {
-      this.loadWastePickerComplaints();
-    }
-  }
-  loadComplaint() {
-    const url = `${this.app.baseUrl}getDriverComplaints`;
+
     this.http.get(url).subscribe((data: any) => {
-      this.driverComplaints = data.map((complaint: any) => ({
-        ...complaint,
-        formattedTime: this.formatTime(complaint.time)
-      }));
-    });
-  }
-  loadWastePickerComplaints() {
-    const url = `${this.app.baseUrl}getWastePickerComplaints`;
-    this.http.get(url).subscribe((data: any) => {
-      this.wastePickerComplaints = data.map((complaint: any) => ({
+      this.complaints = data.map((complaint: any) => ({
         ...complaint,
         formattedTime: this.formatTime(complaint.time)
       }));

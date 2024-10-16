@@ -15,10 +15,10 @@ export class DashboardComponent {
   colorMapping: any = {};
 
   constructor(private http: HttpClient, private app: AppComponent) {
-    this.loadDriverAndUserData("weekly");
+    this.loadDriverAndUserData("monthly");
   }
   switchData(viewType: string) {
-     this.loadDriverAndUserData(viewType); 
+    this.loadDriverAndUserData(viewType);
   }
   loadDriverAndUserData(viewType: string) {
     const driverUrl = `${this.app.baseUrl}getDriverDailyData/${viewType}`;
@@ -72,40 +72,45 @@ export class DashboardComponent {
     return new Chart({
       chart: {
         type: 'pie',
-        plotShadow: false,
-        height: '15%',
+        // plotShadow: false,
+        // height: '15%',
       },
-      credits: {
-        enabled: false,
-      },
-      plotOptions: {
-        pie: {
-          innerSize: '90%',
-          borderWidth: 2,
-          dataLabels: {
-            format: '{point.name}',
-            distance: 1,
-            style: {
-              fontSize: '12px'
-            }
-          },
-        },
-      },
+      // credits: {
+      //   enabled: false,
+      // },
+      // plotOptions: {
+      //   pie: {
+      //     innerSize: '90%',
+      //     borderWidth: 2,
+      //     dataLabels: {
+      //       format: '{point.name}',
+      //       distance: 1,
+      //       style: {
+      //         fontSize: '12px'
+      //       }
+      //     },
+      //   },
+      // },
       title: {
         text: title,
-        align: 'center',
-        verticalAlign: 'middle',
-        floating: true,
-        style: {
-          fontSize: '16px',
-          color: '#000',
-        },
+        // align: 'center',
+        // verticalAlign: 'middle',
+        // floating: true,
+        // style: {
+        //   fontSize: '16px',
+        //   color: '#000',
+        // },
       },
-      legend: {
-        enabled: false,
+      // legend: {
+      //   enabled: false,
+      // },
+
+      credits: {
+        enabled: false
       },
       series: [{
         type: 'pie',
+        name: 'Total',
         data: chartData,
       }],
       responsive: {
