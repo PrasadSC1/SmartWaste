@@ -24,6 +24,7 @@ export class DashboardComponent {
     const driverUrl = `${this.app.baseUrl}getDriverDailyData/${viewType}`;
     const userUrl = `${this.app.baseUrl}getUsersDailyData/${viewType}`;
     const wastePickerUrl = `${this.app.baseUrl}getWastePickersDailyData/${viewType}`;
+    console.log(viewType);
 
     this.http.get(driverUrl).subscribe({
       next: (driverData: any) => {
